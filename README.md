@@ -1,6 +1,8 @@
-# PhishGuard
+# Oltaya Takılma
 
-PhishGuard, teyit.org için hazırlanan ve oturumlarda tek link veya QR kod ile paylaşılabilecek mobil öncelikli bir oltalama farkındalığı oyunudur.
+Telefonuna gelen e-postaları incele. Sahte gönderici adreslerini, taklit linkleri ve sosyal mühendislik tuzaklarını yakala.
+
+Teyit.org için hazırlanan ve oturumlarda tek link veya QR kod ile paylaşılabilecek mobil öncelikli bir oltalama farkındalığı oyunudur.
 
 ## Kullanım
 
