@@ -481,10 +481,27 @@
     .avatar{width:44px;height:44px}
     .detail{inset:0}
     .dhead{padding:10px 12px}
-    .dbody{padding:14px 16px calc(116px + env(safe-area-inset-bottom))}
+    .dbody{padding:14px 16px calc(132px + env(safe-area-inset-bottom))}
     .actions{
-      padding:12px 14px calc(14px + env(safe-area-inset-bottom));
-      position:fixed;
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      padding:12px 14px calc(20px + env(safe-area-inset-bottom));
+      z-index:8;
+      min-height:96px;
+      align-items:end;
+      box-shadow:0 -12px 28px rgba(15,23,42,.08);
+    }
+    .btn{
+      min-height:52px;
+      font-size:15px;
+    }
+    .btn.next{
+      min-height:54px;
+    }
+    .screen.whatsapp-mode .actions{
+      position:absolute;
       bottom:0;
     }
     .toast{
