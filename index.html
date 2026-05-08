@@ -106,6 +106,106 @@
   .stat .v{font-size:22px;font-weight:700;margin-top:2px}
   .legend{margin-top:16px;font-size:13px;color:#aab0cd}
   .legend b{color:#fff}
+  .session-card{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:14px;
+    align-items:center;
+    margin-top:18px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    background:rgba(255,255,255,.06);
+  }
+  .qr-box{
+    width:96px;
+    height:96px;
+    display:grid;
+    place-items:center;
+    padding:7px;
+    border-radius:14px;
+    background:#fff;
+    border:0;
+    cursor:pointer;
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .qr-box:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(0,0,0,.24)}
+  .qr-box:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+  .qr-box img{display:block;width:100%;height:100%;border-radius:8px}
+  .session-card b{display:block;margin-bottom:4px;color:#fff;font-size:14px}
+  .session-card span{display:block;color:#c7cbe0;font-size:12px;line-height:1.45}
+  .share-url{
+    margin-top:8px;
+    color:#93c5fd;
+    font-size:12px;
+    font-weight:700;
+    word-break:break-all;
+  }
+  .qr-modal{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    background:rgba(5,8,18,.72);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+  }
+  .qr-modal.show{opacity:1;pointer-events:auto}
+  .qr-panel{
+    width:min(420px,100%);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:28px;
+    background:#f8fafc;
+    color:#0f172a;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 30px 100px rgba(0,0,0,.45);
+    transform:scale(.96);
+    transition:transform .18s ease;
+  }
+  .qr-modal.show .qr-panel{transform:scale(1)}
+  .qr-panel h2{margin:4px 0 6px;font-size:22px;letter-spacing:-.02em}
+  .qr-panel p{margin:0 0 16px;color:#64748b;font-size:14px;line-height:1.45}
+  .qr-large{
+    width:min(280px,74vw);
+    height:min(280px,74vw);
+    display:grid;
+    place-items:center;
+    margin:0 auto 16px;
+    padding:12px;
+    border-radius:22px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+  }
+  .qr-large img{width:100%;height:100%;display:block;border-radius:12px}
+  .qr-link{
+    display:block;
+    padding:10px 12px;
+    border-radius:12px;
+    background:#e0f2fe;
+    color:#0369a1;
+    font-size:13px;
+    font-weight:800;
+    text-decoration:none;
+    word-break:break-all;
+  }
+  .qr-close{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:34px;
+    height:34px;
+    border:0;
+    border-radius:50%;
+    background:#e2e8f0;
+    color:#334155;
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+  }
   .kbd{
     display:inline-block;padding:2px 6px;border-radius:6px;
     background:#1b2247;border:1px solid #2a3372;font-size:11px;color:#cfd5ff
@@ -581,6 +681,16 @@
       <div class="legend">
         <p><b>İpucu:</b> Gönderen adına ve linke yakından bak. <span class="kbd">akbank.com</span> ≠ <span class="kbd">akkbank.com</span>. Aciliyet, ödül ve kimlik isteyen mesajlardan şüphelen.</p>
       </div>
+      <div class="session-card" aria-label="Oturumda telefondan oynama bağlantısı">
+        <button class="qr-box" id="qrOpen" type="button" aria-label="QR kodu büyüt">
+          <img id="qrImage" alt="Oyunu telefonda açmak için QR kod">
+        </button>
+        <div>
+          <b>Oturumda telefondan oyna</b>
+          <span>QR kodu okut veya bağlantıyı paylaş; katılımcılar giriş yapmadan oyuna başlar.</span>
+          <div class="share-url" id="shareUrl">phishguard</div>
+        </div>
+      </div>
     </div>
 
     <div class="phone-wrap">
@@ -665,10 +775,19 @@
             <h3 id="endTitle">Tebrikler!</h3>
             <p id="endSub">Tüm mesajları değerlendirdin.</p>
             <div class="ring" id="ring"><div class="inner"><div style="text-align:center"><b id="endPct">0%</b><br><small>doğruluk</small></div></div></div>
-            <button class="btn again" id="again">Tekrar Oyna</button>
+            <button class="btn again" id="again">Başka teste geç</button>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="qr-modal" id="qrModal" aria-hidden="true">
+    <div class="qr-panel" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
+      <button class="qr-close" id="qrClose" type="button" aria-label="Kapat">×</button>
+      <h2 id="qrTitle">Telefondan oyna</h2>
+      <p>Katılımcılar bu QR kodu okutup oyuna giriş yapmadan başlayabilir.</p>
+      <div class="qr-large"><img id="qrLargeImage" alt="Oyunun büyük QR kodu"></div>
+      <a class="qr-link" id="shareLinkLarge" href="#" target="_blank" rel="noopener">phishguard</a>
     </div>
   </div>
   <button class="home-back" id="homeBack">← Ana Sayfaya Dön</button>
@@ -975,6 +1094,14 @@ const fontDown = $("#fontDown");
 const fontUp = $("#fontUp");
 const startButton = $("#start");
 const channelButtons = document.querySelectorAll("[data-channel]");
+const qrImage = $("#qrImage");
+const qrLargeImage = $("#qrLargeImage");
+const qrOpen = $("#qrOpen");
+const qrClose = $("#qrClose");
+const qrModal = $("#qrModal");
+const shareUrl = $("#shareUrl");
+const shareLinkLarge = $("#shareLinkLarge");
+const SHARE_LINK = "https://phishguard-two-flax.vercel.app/";
 const TEXT_SCALES = [1, 1.15, 1.3];
 let textScaleIndex = 0;
 
@@ -988,6 +1115,28 @@ function enterFocusMode(){
   if(window.matchMedia("(min-width: 901px)").matches){
     document.body.classList.add("focus-mode");
   }
+}
+
+function setupShareQr(){
+  const shareLink = SHARE_LINK;
+  const displayLink = shareLink.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  shareUrl.textContent = displayLink;
+  shareLinkLarge.textContent = displayLink;
+  shareLinkLarge.href = shareLink;
+  qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=12&data=${encodeURIComponent(shareLink)}`;
+  qrLargeImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=420x420&margin=18&data=${encodeURIComponent(shareLink)}`;
+}
+
+function openQrModal(){
+  qrModal.classList.add("show");
+  qrModal.setAttribute("aria-hidden", "false");
+  qrClose.focus();
+}
+
+function closeQrModal(){
+  qrModal.classList.remove("show");
+  qrModal.setAttribute("aria-hidden", "true");
+  qrOpen.focus();
 }
 
 function currentChannel(){
@@ -1014,6 +1163,8 @@ function createState(channel="mail"){
 
 let state = createState();
 let results = new Map();
+
+setupShareQr();
 
 function clock(){
   const d = new Date();
@@ -1129,6 +1280,15 @@ channelButtons.forEach(button=>{
   button.onclick = ()=>startChannel(button.dataset.channel);
 });
 
+qrOpen.onclick = openQrModal;
+qrClose.onclick = closeQrModal;
+qrModal.onclick = (event)=>{
+  if(event.target === qrModal) closeQrModal();
+};
+document.addEventListener("keydown", (event)=>{
+  if(event.key === "Escape" && qrModal.classList.contains("show")) closeQrModal();
+});
+
 homeBack.onclick = ()=>{
   document.body.classList.remove("focus-mode");
   detail.classList.remove("show");
@@ -1186,7 +1346,7 @@ function finish(){
   const t = pct>=90?"🏆":pct>=70?"🥈":pct>=50?"🥉":"📚";
   $("#trophy").textContent = t;
   $("#endTitle").textContent = pct>=70?"Harika! Oltayı tanıyorsun.":pct>=50?"Fena değil — biraz daha pratik.":"Tuzakları kaçırdın. Tekrar dene!";
-  $("#endSub").textContent = `${items.length} mesajdan ${state.correct} tanesini doğru sınıflandırdın.`;
+  $("#endSub").textContent = `${state.correct}/${items.length} doğru`;
   detail.classList.remove("show");
   toast.classList.remove("show");
   end.classList.add("show");
