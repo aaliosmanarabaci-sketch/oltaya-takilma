@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#0b1020" />
-<meta name="description" content="Teyit.org için hazırlanan PhishGuard ile sahte e-postaları ve güvenli mesajları ayırt etmeyi öğren." />
+<meta name="description" content="Teyit.org için hazırlanan PhishGuard ile sahte mesajları ayırt etmeyi öğren: link, bilgi toplama ve kurulum tuzakları." />
 <title>PhishGuard — Teyit.org Oltalama Oyunu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -747,14 +747,14 @@
       <div class="partner"><svg class="teyit-logo" role="img" aria-label="teyit"><use href="#teyit-logo"></use></svg></div>
       <span class="badge"><span class="dot"></span> Oltaya Takılma · Teyit.org Eğitim Oyunu</span>
       <h1>Oltayı yutma. Mesajı tanı.</h1>
-      <p>Mail, SMS ve WhatsApp mesajlarını incele. Sahte gönderenleri, taklit linkleri ve sosyal mühendislik tuzaklarını yakala. Güvenliyse kalsın, oltalama ise sil gitsin.</p>
+      <p>Mail, SMS ve WhatsApp mesajlarını incele. Sahte gönderenleri, şüpheli linkleri, bilgi toplama ve kurulum/indirme tuzaklarını yakala. Güvenliyse kalsın, oltalama ise sil gitsin.</p>
       <div class="stats">
         <div class="stat"><div class="k">Süre</div><div class="v">2-3 dk</div></div>
         <div class="stat"><div class="k">Mesaj</div><div class="v">8 vaka</div></div>
         <div class="stat"><div class="k">Sonuç</div><div class="v">Kişisel</div></div>
       </div>
       <div class="legend">
-        <p><b>İpucu:</b> Gönderen adına ve linke yakından bak. <span class="kbd">akbank.com</span> ≠ <span class="kbd">akkbank.com</span>. Aciliyet, ödül ve kimlik isteyen mesajlardan şüphelen.</p>
+        <p><b>İpucu:</b> Gönderen ve alan adına bak; her tuzak link ile gelmez. Ek dosya, APK kur, şifre/kodu mesajla yazdır veya telefonda tuşlattırma da risklidir.</p>
       </div>
       <div class="session-card" aria-label="Oturumda telefondan oynama bağlantısı">
         <button class="qr-box" id="qrOpen" type="button" aria-label="QR kodu büyüt">
@@ -786,7 +786,7 @@
           <div class="intro" id="intro">
             <div class="brandline"><svg class="teyit-logo" role="img" aria-label="teyit"><use href="#teyit-logo"></use></svg></div>
             <h3>Mesajını incele, oltalamayı yakala.</h3>
-            <p>Her mesajda gönderici adresine, linklere ve aciliyet diline bak. Güvenliyse kalsın, oltalama ise sil gitsin.</p>
+            <p>Her mesajda gönderici, link, ek/indirme talebi ve doğrudan bilgi istemelerine bak. Güvenliyse kalsın, oltalama ise sil gitsin.</p>
             <div class="intro-steps">
               <div class="intro-step"><b>1.</b> Mesajı aç ve detayları oku.</div>
               <div class="intro-step"><b>2.</b> Kararını ver, açıklamayı incele.</div>
@@ -875,15 +875,15 @@ const CHANNELS = {
     counterLabel:"değerlendirildi",
     items:[
   {
-    from:"Akbank Müşteri Hizmetleri",
-    addr:"bilgilendirme@akkbank.com",
+    from:"YurtBank Güvenlik",
+    addr:"uyari@yurtbank-verify.net",
     color:"#dc2626",
-    subj:"ACİL: Hesabınız 24 saat içinde kapatılacak",
+    subj:"ACİL: Hesap doğrulaması — telefon ile tamamlayın",
     time:"09:32",
-    body:`Sayın Müşterimiz,\n\nGüvenlik sistemimiz hesabınızda olağan dışı bir hareket tespit etti. Hesabınızın kapatılmaması için aşağıdaki bağlantıdan kimlik doğrulamanızı 24 saat içinde tamamlamanız gerekmektedir.\n\nDoğrulama bağlantısı: https://akkbank.com/guvenlik-dogrulama\n\nT.C. kimlik no, kart numarası ve şifrenizi girerek işlemi tamamlayın.\n\nSaygılarımızla,\nAkbank`,
+    body:`Sayın müşterimiz,\n\nKartınızdan şüpheli bir işlem denendiği için hesabınız risk altına alınmıştır. İnternette herhangi bir bağlantıya gerek yoktur.\n\n0850 840 33 22 numarasını arayıp otomatik menüde sırasıyla kart numaranızın ilk 8 hanesini, son 4 hanesini ve kart şifrenizi tuşlayarak doğrulama yapınız.\n\nİşlem 2 saat içinde tamamlanmazsa kartınız kalıcı olarak bloke edilir.\n\nYurtBank Güvenlik Birimi`,
     phish:true,
-    why:"Gönderici alan adı 'akkbank.com' — gerçek banka 'akbank.com.tr' kullanır. Aciliyet baskısı + kart şifresi isteme klasik oltalama.",
-    flags:["akkbank.com","akkbank.com/guvenlik-dogrulama","T.C. kimlik no, kart numarası ve şifrenizi","24 saat içinde"]
+    why:"Bankalar kart şifresini veya tam kart numarasını telefonda tuşlatmaz; doğrulama genelde uygulama veya şubeniz üzerinden yapılır. Aciliyet ve taklit domain ('verify.net') şüphe uyandırır.",
+    flags:["0850 840 33 22","kart şifrenizi tuşlayarak","yurtbank-verify.net","İşlem 2 saat içinde"]
   },
   {
     from:"Trendyol",
@@ -919,15 +919,15 @@ const CHANNELS = {
     flags:[]
   },
   {
-    from:"Microsoft 365",
-    addr:"account-security@microsft-support.com",
+    from:"Ödeme Bildirimleri",
+    addr:"dekont@finans-takip-tr.net",
     color:"#0ea5e9",
-    subj:"Şifre süreniz bugün doluyor — hemen yenileyin",
+    subj:"Şubat ekstreniz — ekte güvenli doğrulama",
     time:"Pzt",
-    body:`Sayın kullanıcı,\n\nMicrosoft 365 hesabınızın şifresi bugün sona eriyor. Hesabınıza erişiminizi kaybetmemek için lütfen aşağıdaki bağlantıdan mevcut şifrenizi onaylayın ve yenisini belirleyin:\n\nhttps://microsft-support.com/login\n\nİşlem yapılmazsa hesabınız 12 saat içinde askıya alınacaktır.`,
+    body:`Sayın müşterimiz,\n\nKredi kartı ekstreniz güncellenmiştir. Güvenlik gereği doğrudan web bağlantısı paylaşılmamaktadır.\n\nBu e-postanın ekindeki Ekstre_Subat_2026.zip dosyasını indirip açınız. İçindeki Excel dosyasında beliren uyarıda 'İçeriği Etkinleştir' / makroları aç seçeneğini onaylamanız doğrulama için zorunludur.\n\nDosya imzası görünmezse güvenlik yazılımınızı geçici olarak devre dışı bırakınız.\n\nFinans Takip Entegrasyon`,
     phish:true,
-    why:"'microsft-support.com' — Microsoft yazımı yanlış (typosquatting). Aciliyet + şifre toplama amaçlı sahte giriş ekranı.",
-    flags:["microsft-support.com","microsft-support.com/login","mevcut şifrenizi onaylayın","12 saat içinde askıya"]
+    why:"Zararlı yazılım sıklıkla ZIP ve makrolu Excel ile gelir; kurumlar böyle bir şey istemez. Gönderici alanı şüpheli ve 'güvenlik yazılımını kapat' uyarısı ciddi kırmızı bayraktır.",
+    flags:["Ekstre_Subat_2026.zip","makroları aç","güvenlik yazılımınızı geçici olarak devre dışı","finans-takip-tr.net"]
   },
   {
     from:"Spotify",
@@ -985,10 +985,10 @@ const CHANNELS = {
         color:"#dc2626",
         subj:"Şüpheli işlem bildirimi",
         time:"09:48",
-        body:`Kartınızla 18.490 TL tutarında şüpheli işlem denenmiştir. İşlemi iptal etmek için hemen bağlantıya girip müşteri şifrenizi doğrulayın:\n\nhttps://bankam-guvenlik.com/iptal`,
+        body:`INTERNET BANKACILIK UYARI: Kartınızdan şüpheli bir işlem algılandı. Bloke edilmemesi için bu SMS'e DOĞRUDAN YANIT vererek sırasıyla kartınızın son 4 hanesi ve az önce gönderdiğimiz SMS şifresini (OTP) yazınız. Güvenliğiniz için internet bağlantısı veya link kullanmayınız.`,
         phish:true,
-        why:"Banka şifresi SMS linkinden istenmez. Yüksek tutar paniği ve sahte alan adı klasik sosyal mühendisliktir.",
-        flags:["18.490 TL","müşteri şifrenizi","bankam-guvenlik.com","hemen"]
+        why:"Bankalar kart bilgisini veya OTP'yi SMS ile 'yanıtlayın' diye istemez; doğrulama uygulama veya resmi kanaldan yapılır. Link olmadan gelen mesaj da oltalama olabilir.",
+        flags:["bu SMS'e DOĞRUDAN YANIT","son 4 hanesi","OTP'yi","link kullanmayınız"]
       },
       {
         from:"MHRS",
@@ -1035,15 +1035,15 @@ const CHANNELS = {
         flags:[]
       },
       {
-        from:"Hediye Çeki",
-        addr:"+90 507 771 20 20",
+        from:"Mobil Şube",
+        addr:"+90 536 902 11 88",
         color:"#8b5cf6",
-        subj:"1.000 TL kazandınız",
+        subj:"Zorunlu güncelleme",
         time:"Paz",
-        body:`Tebrikler! 1.000 TL market hediye çeki kazandınız. Hediyenizi almak için kart bilgilerinizi doğrulayın:\n\nhttps://hediye-kuponu-kazan.com`,
+        body:`Android Mobil Şube: Güvenlik yaması yayınlandı. Bu mesaja EVET yazarak onay verin; size otomatik yanıtta TurkiyeMobilBanka_v3.apk kurulum dosyasını ve 'bilinmeyen kaynaklardan yükleme' talimatını ileteceğiz. Mağaza dışı yükleme normaldir, uyarıları yok sayınız.`,
         phish:true,
-        why:"Beklenmeyen ödül, kart bilgisi isteme ve güven vermeyen alan adı oltalama göstergesidir.",
-        flags:["1.000 TL","kart bilgilerinizi","hediye-kuponu-kazan.com"]
+        why:"Bankacılık uygulaması mağaza dışı APK ile güncellenmez. SMS ile 'EVET' yazdırıp yükleme göndermek ve güvenlik uyarılarını yok saymak tipik zararlı yazılım tuzağıdır.",
+        flags:["TurkiyeMobilBanka_v3.apk","bilinmeymeyen kaynaklardan","Mağaza dışı yükleme","uyarıları yok sayınız"]
       },
       {
         from:"Okul Bilgi",
@@ -1111,16 +1111,16 @@ const CHANNELS = {
         flags:["kapanacaktır","6 haneli doğrulama kodunu","bu sohbete yazın"]
       },
       {
-        from:"Sahibinden Alıcı",
+        from:"Tanınmayan numara",
         addr:"+90 531 228 90 14",
         unknownContact:true,
         color:"#f59e0b",
-        subj:"Kapora iadesi",
+        subj:"Kapora / teslim",
         time:"Dün",
-        body:`Ürünü almak istiyorum ama sistem güvenli ödeme istiyor. Paranın hesabına geçmesi için şu linkten kartını doğrula:\n\nhttps://sahibinden-guvenli-odeme.net`,
+        body:`Merhaba, ilandaki ürünü hemen kapora ile kapmak istiyorum. Güvenlik gereği kapıda ödemeden önce adres doğrulaması yapıyorum.\n\nLütfen adınız soyadınız, doğum tarihiniz ve T.C. kimlik numaranızın son 4 hanesini buradan yazın. Sonra kapora için havuz hesap bilgisini ileteceğim.\n\nLink kullanmıyorum, daha güvenli.`,
         phish:true,
-        why:"İkinci el alışverişlerde sahte güvenli ödeme linkleri sık kullanılır. Kart doğrulama ve taklit alan adı şüphelidir.",
-        flags:["kartını doğrula","sahibinden-guvenli-odeme.net","güvenli ödeme"]
+        why:"Satın alma bahanesiyle kimlik parçası toplamak ve sonra kapora/havuz hesaba yönlendirmek ikinci el dolandırıcılığında sık görülür. 'Link yok' güven vermez.",
+        flags:["T.C. kimlik numaranızın son 4 hanesini","havuz hesap","adınız soyadınız"]
       },
       {
         from:"Site Yönetimi",
@@ -1151,12 +1151,12 @@ const CHANNELS = {
         addr:"Kripto · WhatsApp grubu",
         unknownContact:false,
         color:"#111827",
-        subj:"Garantili kazanç",
+        subj:"Kurulum APK",
         time:"Paz",
-        body:`Bugün yatıran herkes 3 saatte parasını ikiye katlıyor. Kontenjan dolmadan katılmak için cüzdan bağlantına giriş yap:\n\nhttps://wallet-bonus-airdrop.com`,
+        body:`Arkadaşlar bot kurulumu çok basit. Önce Ayarlar → Güvenlik'ten bilinmeyen kaynaklara izin verin. Sonra gruptaki sabit mesajdaki CryptoTradeSetup.apk dosyasını indirip kurun; uygulama açılınca cüzdan bağlantısı için seed ifadenizi ve SMS doğrulama kodunu ekrana yazmanız yeterli.\n\nLink paylaşmıyorum, dosya doğrudan APK.`,
         phish:true,
-        why:"Garantili yüksek kazanç vaadi, aciliyet ve cüzdan bağlantısı isteme kripto dolandırıcılığı göstergesidir.",
-        flags:["3 saatte","ikiye katlıyor","wallet-bonus-airdrop.com","Kontenjan dolmadan"]
+        why:"Yatırım vaadi + mağaza dışı APK + tohum kelime ve SMS kodu isteme tipik dolandırıcılık veya zararlı yazılım senaryosudur. Resmi uygulama mağazasından indirilir.",
+        flags:["CryptoTradeSetup.apk","bilinmeyen kaynaklara izin","seed ifadenizi","SMS doğrulama kodunu"]
       }
     ]
   }
