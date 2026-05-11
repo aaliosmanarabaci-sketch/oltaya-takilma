@@ -406,6 +406,73 @@
   .screen.whatsapp-mode .explain{box-shadow:0 1px 2px rgba(15,23,42,.08)}
   .screen.whatsapp-mode .actions{background:linear-gradient(180deg,rgba(239,231,220,0),#efe7dc 30%)}
 
+  /* SMS (Messages-style, distinct from mail) */
+  .screen.sms-mode .statusbar{background:#f6f6f6}
+  .screen.sms-mode .header,
+  .screen.sms-mode .dhead{
+    background:#f6f6f6;
+    border-color:#d1d1d6;
+    color:#000;
+  }
+  .screen.sms-mode .header .sub{color:#8e8e93}
+  .screen.sms-mode .font-controls{background:#fff;border-color:#d1d1d6}
+  .screen.sms-mode .back{color:#007aff}
+  .screen.sms-mode .back:hover{background:rgba(0,122,255,.08)}
+  .screen.sms-mode .list{background:#e5e5ea}
+  .screen.sms-mode .detail{background:#e5e5ea}
+  .screen.sms-mode .mail{
+    margin:6px 12px;
+    border:0;
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 1px 2px rgba(0,0,0,.06);
+    grid-template-columns:38px 1fr auto;
+    gap:12px;
+    padding:12px 14px;
+  }
+  .screen.sms-mode .mail:hover{background:#fafafa}
+  .screen.sms-mode .mail.unread:before{background:#34c759}
+  .screen.sms-mode .sms-avatar{
+    width:38px;height:38px;border-radius:50%;
+    display:grid;place-items:center;
+    font-weight:800;font-size:11px;color:#fff;
+    background:linear-gradient(160deg,#5ac8fa,#007aff);
+  }
+  .screen.sms-mode .sms-peer{
+    font-weight:700;font-size:calc(15px * var(--text-scale));color:#000;
+  }
+  .screen.sms-mode .sms-snippet{
+    font-size:calc(13px * var(--text-scale));color:#8e8e93;margin-top:3px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .screen.sms-mode .dbody{padding-bottom:120px}
+  .sms-detail-top{padding-bottom:10px;border-bottom:1px solid #d1d1d6;margin-bottom:12px}
+  .sms-detail-num{font-weight:800;font-size:calc(17px * var(--text-scale));color:#000}
+  .sms-detail-from{font-size:calc(12px * var(--text-scale));color:#8e8e93;margin-top:4px}
+  .sms-thread{display:flex;flex-direction:column;gap:10px}
+  .sms-in{align-self:flex-start;max-width:92%}
+  .sms-text{
+    display:inline-block;padding:10px 14px;border-radius:18px;
+    background:#e9e9eb;color:#000;font-size:calc(15px * var(--text-scale));line-height:1.45;
+    white-space:pre-wrap;word-break:break-word;
+  }
+  .sms-mode .explain{border-radius:14px}
+  .screen.sms-mode .progress{background:#d1d1d6}
+  .screen.sms-mode .progress > div{background:linear-gradient(90deg,#34c759,#30d158)}
+  .screen.sms-mode .actions{background:linear-gradient(180deg,rgba(229,229,234,0),#e5e5ea 28%)}
+
+  /* WhatsApp list/detail tweaks (no faux email subject) */
+  .screen.whatsapp-mode .wa-sub{
+    font-size:calc(11px * var(--text-scale));color:#6b7280;margin-top:2px;
+  }
+  .screen.whatsapp-mode .wa-sub-kind{color:#047857}
+  .screen.whatsapp-mode .wa-snippet{margin-top:4px}
+  .screen.whatsapp-mode .wa-avatar{font-size:13px}
+  .screen.whatsapp-mode .wa-unknown-tag{font-size:calc(12px * var(--text-scale));color:#6b7280}
+  .screen.whatsapp-mode .wa-saved-tag{font-size:calc(12px * var(--text-scale));color:#047857}
+  .screen.whatsapp-mode .sender.wa-sender{border-bottom-color:rgba(7,94,84,.2)}
+  .screen.whatsapp-mode .wa-msg{margin-top:12px}
+
   .actions{
     position:absolute; left:0; right:0; bottom:0;
     padding:12px 14px 22px;
@@ -997,29 +1064,32 @@ const CHANNELS = {
     items:[
       {
         from:"Anne",
-        addr:"WhatsApp",
+        addr:"",
+        unknownContact:false,
         color:"#16a34a",
-        subj:"Acil para lazım",
+        subj:"Anne mesajı",
         time:"11:02",
-        body:`Telefonum bozuldu, geçici hattan yazıyorum. Çok acil 8.500 TL göndermem lazım. Kimseye söyleme, IBAN atıyorum şimdi.`,
+        body:`Canım oğlum bak ne gördüm, zincir marketmiş bedava 2.000 TL hediye çeki dağıtıyorlarmış. Arkadaşım atmış ben de hemen düşündüm sen de doldur ne olur ne olmaz 😊\n\nhttps://market-hediye2026.com\n\nForm çok kısa diyorlar, bugün bitiyormuş. Boşuna kaçırma sen de şansını dene.`,
         phish:true,
-        why:"Yakın kişi taklidi, aciliyet, gizlilik isteği ve para talebi WhatsApp dolandırıcılığında sık görülür. Önce kişiyi başka kanaldan arayıp doğrulamak gerekir.",
-        flags:["geçici hattan","Çok acil","8.500 TL","Kimseye söyleme"]
+        why:"Rehberinde güvenilen birinden gelmesi içeriği doğru yapmaz. Beklenmedik hediye, zincir paylaşım baskısı ve güven vermeyen alan adı tuzağı işaret edebilir. Kampanyayı marketin resmi sitesi veya şubesinden doğrula.",
+        flags:["market-hediye2026.com","bedava","hediye çeki","bugün bitiyormuş"]
       },
       {
-        from:"Market Çekilişi",
-        addr:"WhatsApp grubu",
+        from:"Tanınmayan numara",
+        addr:"+90 533 441 02 18",
+        unknownContact:true,
         color:"#22c55e",
-        subj:"Hediye çeki linki",
+        subj:"Şüpheli kampanya",
         time:"10:44",
-        body:`Zincir market 30. yıl kampanyası başladı. 2.000 TL hediye çeki için ankete katıl:\n\nhttps://market-hediye2026.com\n\nBu mesajı 5 kişiye gönder, hakkını kaybetme.`,
+        body:`Tebrikler, seçilmiş müşterilerimize özel 2.000 TL hediye çeki tanımlandı. Aktifleştirmek için bilgilerinizi güvenli formdan girin:\n\nhttps://market-hediye2026.com\n\nSon başvuru bugün 23:59. Bu mesajı üç kişiye iletenlere ek kontenjan açılıyor.`,
         phish:true,
-        why:"Zincir mesaj, beklenmeyen ödül, sahte kampanya alan adı ve paylaşmaya zorlama dolandırıcılık işaretidir.",
-        flags:["2.000 TL","market-hediye2026.com","5 kişiye gönder","hakkını kaybetme"]
+        why:"Kayıtlı olmayan numaradan gelen otomatik kampanya metni, aciliyet ve zincir iletim şartı tipik oltalamadır. Hediye ve kampanyayı kurumun resmi kanallarından teyit et.",
+        flags:["market-hediye2026.com","Seçilmiş müşterilerimize","Son başvuru bugün","üç kişiye ileten"]
       },
       {
         from:"Ayşe",
-        addr:"WhatsApp",
+        addr:"+90 532 884 16 02",
+        unknownContact:false,
         color:"#0ea5e9",
         subj:"Toplantı saati",
         time:"09:21",
@@ -1030,7 +1100,8 @@ const CHANNELS = {
       },
       {
         from:"WhatsApp Destek",
-        addr:"WhatsApp",
+        addr:"+90 544 901 22 33",
+        unknownContact:true,
         color:"#10b981",
         subj:"Hesap doğrulama",
         time:"Dün",
@@ -1041,7 +1112,8 @@ const CHANNELS = {
       },
       {
         from:"Sahibinden Alıcı",
-        addr:"WhatsApp",
+        addr:"+90 531 228 90 14",
+        unknownContact:true,
         color:"#f59e0b",
         subj:"Kapora iadesi",
         time:"Dün",
@@ -1053,6 +1125,7 @@ const CHANNELS = {
       {
         from:"Site Yönetimi",
         addr:"Apartman Grubu",
+        unknownContact:false,
         color:"#64748b",
         subj:"Su kesintisi",
         time:"Pzt",
@@ -1063,7 +1136,8 @@ const CHANNELS = {
       },
       {
         from:"Kargo Görevlisi",
-        addr:"WhatsApp",
+        addr:"+90 542 776 11 09",
+        unknownContact:true,
         color:"#f97316",
         subj:"Konum paylaşımı",
         time:"Pzt",
@@ -1074,7 +1148,8 @@ const CHANNELS = {
       },
       {
         from:"Kripto Fırsat",
-        addr:"WhatsApp grubu",
+        addr:"Kripto · WhatsApp grubu",
+        unknownContact:false,
         color:"#111827",
         subj:"Garantili kazanç",
         time:"Paz",
@@ -1185,10 +1260,42 @@ function initials(s){
   return s.split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 }
 
+function previewSnippet(body){
+  const line = body.split("\n").map(l=>l.trim()).find(Boolean) || "";
+  const max = 72;
+  if(line.length <= max) return line;
+  return line.slice(0, max) + "…";
+}
+
+function smsAvatarLabel(addr){
+  const raw = String(addr || "").trim();
+  if(!raw) return "··";
+  const compact = raw.replace(/\s/g,"");
+  const digits = compact.replace(/\D/g,"");
+  if(digits.length >= 2 && (/^\+?\d/.test(compact) || /^[0-9]/.test(compact))) return digits.slice(-2);
+  return raw.slice(0, 2).toUpperCase();
+}
+
+function whatsAppTitle(m){
+  return m.unknownContact ? m.addr : m.from;
+}
+
+function whatsAppAvatarLabel(m){
+  if(m.unknownContact) return smsAvatarLabel(m.addr);
+  return initials(m.from);
+}
+
+function whatsAppListBadge(m){
+  if(m.unknownContact) return `<div class="wa-sub">Kayıtlı değil</div>`;
+  if(/grup/i.test(String(m.addr||""))) return `<div class="wa-sub wa-sub-kind">Grup sohbeti</div>`;
+  return `<div class="wa-sub wa-sub-kind">Rehberinde kayıtlı</div>`;
+}
+
 function renderList(){
   const channel = currentChannel();
   const items = currentItems();
   screen.classList.toggle("whatsapp-mode", state.channel === "whatsapp");
+  screen.classList.toggle("sms-mode", state.channel === "sms");
   list.innerHTML = "";
   state.order.forEach((mailIndex)=>{
     const m = items[mailIndex];
@@ -1196,15 +1303,36 @@ function renderList(){
     const decided = state.decided.has(i);
     const el = document.createElement("div");
     el.className = "mail" + (decided ? "" : " unread");
-    el.innerHTML = `
+    let row = "";
+    if(state.channel === "mail"){
+      row = `
       <div class="avatar" style="background:${m.color}">${initials(m.from)}</div>
       <div class="meta">
-        <div class="from">${m.from}</div>
-        <div class="subj">${m.subj}</div>
-        <div class="prev">${m.body.split("\n")[0].slice(0,60)}…</div>
+        <div class="from">${escapeHTML(m.from)}</div>
+        <div class="subj">${escapeHTML(m.subj)}</div>
+        <div class="prev">${escapeHTML(previewSnippet(m.body))}</div>
       </div>
-      <div class="time">${m.time}</div>
-    `;
+      <div class="time">${escapeHTML(m.time)}</div>`;
+    } else if(state.channel === "sms"){
+      row = `
+      <div class="sms-avatar">${smsAvatarLabel(m.addr)}</div>
+      <div class="meta">
+        <div class="sms-peer">${escapeHTML(m.addr)}</div>
+        <div class="sms-snippet">${escapeHTML(previewSnippet(m.body))}</div>
+      </div>
+      <div class="time">${escapeHTML(m.time)}</div>`;
+    } else {
+      const title = whatsAppTitle(m);
+      row = `
+      <div class="avatar wa-avatar" style="background:${m.color}">${whatsAppAvatarLabel(m)}</div>
+      <div class="meta">
+        <div class="from wa-peer">${escapeHTML(title)}</div>
+        ${whatsAppListBadge(m)}
+        <div class="prev wa-snippet">${escapeHTML(previewSnippet(m.body))}</div>
+      </div>
+      <div class="time">${escapeHTML(m.time)}</div>`;
+    }
+    el.innerHTML = row;
     el.onclick = ()=>open(i);
     if(decided) el.style.opacity = .45;
     list.appendChild(el);
@@ -1247,18 +1375,55 @@ function open(i){
   let bodyHTML = linkify(escapeHTML(m.body));
   bodyHTML = highlightFlags(bodyHTML, flags);
   const addrHTML = decided ? highlightAddr(m.addr, flags) : escapeHTML(m.addr);
-  dbody.innerHTML = `
-    <div class="sender">
-      <div class="avatar" style="background:${m.color};width:40px;height:40px">${initials(m.from)}</div>
-      <div>
-        <div class="name">${escapeHTML(m.from)}</div>
-        <div class="addr">&lt;${addrHTML}&gt;</div>
+  const explainBlock = decided ? `<div class="explain ${m.phish?"":"safe"}"><span class="result-label">${resultTitle}</span><b>Neden ${m.phish?"oltalama":"güvenli"}?</b><br>${escapeHTML(m.why)}</div>` : "";
+
+  if(state.channel === "mail"){
+    dbody.innerHTML = `
+      <div class="sender">
+        <div class="avatar" style="background:${m.color};width:40px;height:40px">${initials(m.from)}</div>
+        <div>
+          <div class="name">${escapeHTML(m.from)}</div>
+          <div class="addr">&lt;${addrHTML}&gt;</div>
+        </div>
       </div>
-    </div>
-    <div class="dsubj">${escapeHTML(m.subj)}</div>
-    <div class="body">${bodyHTML}</div>
-    ${decided ? `<div class="explain ${m.phish?"":"safe"}"><span class="result-label">${resultTitle}</span><b>Neden ${m.phish?"oltalama":"güvenli"}?</b><br>${escapeHTML(m.why)}</div>` : ""}
-  `;
+      <div class="dsubj">${escapeHTML(m.subj)}</div>
+      <div class="body">${bodyHTML}</div>
+      ${explainBlock}
+    `;
+  } else if(state.channel === "sms"){
+    dbody.innerHTML = `
+      <div class="sms-detail-top">
+        <div class="sms-detail-num">${escapeHTML(m.addr)}</div>
+        <div class="sms-detail-from">${escapeHTML(m.from)} · SMS</div>
+      </div>
+      <div class="sms-thread">
+        <div class="sms-in"><div class="sms-text">${bodyHTML}</div></div>
+      </div>
+      ${explainBlock}
+    `;
+  } else {
+    const waTitle = escapeHTML(whatsAppTitle(m));
+    const waAv = whatsAppAvatarLabel(m);
+    let senderSecond = "";
+    if(m.unknownContact){
+      senderSecond = `<div class="addr wa-unknown-tag">Kayıtlı değil · WhatsApp</div>`;
+    } else if(m.addr && String(m.addr).trim()){
+      senderSecond = `<div class="addr">${escapeHTML(m.addr)}</div>`;
+    } else {
+      senderSecond = `<div class="addr wa-saved-tag">Rehberinde kayıtlı · WhatsApp</div>`;
+    }
+    dbody.innerHTML = `
+      <div class="sender wa-sender">
+        <div class="avatar" style="background:${m.color};width:40px;height:40px">${waAv}</div>
+        <div>
+          <div class="name">${waTitle}</div>
+          ${senderSecond}
+        </div>
+      </div>
+      <div class="body wa-msg">${bodyHTML}</div>
+      ${explainBlock}
+    `;
+  }
   document.getElementById("bDel").disabled = decided;
   document.getElementById("bSafe").disabled = decided;
   actions.classList.toggle("answered", decided);
